@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    //
-
+    //login
     public function login(Request $request) {
         $this->validate($request, [
             'email' => 'required',
@@ -28,8 +27,10 @@ class AuthController extends Controller
          */
          
          $user = Auth::user();
+         
          $token = $user->createToken($user->name);
-
+        // dd($user);
+        // dd($user->tokens);
 
         return response([
             'id' => $user->id,
@@ -41,5 +42,24 @@ class AuthController extends Controller
             'updated_at' => $user->updated_at,
             'token' => $token,
         ], 200);
+    }
+
+    //logout
+    public function logout(Request $request) {
+        /**
+         * @var User $user
+         */
+
+         $user = $request->user();
+
+        //get currently logged in user
+         $user = Auth::user(); 
+        //  dd($user);
+         $userToken = $user->tokens;
+        //  $userToken->delet;
+        foreach($userToken as $token){
+            $token->delete();
+        }
+         return response(['message' => 'Logged out success'], 200);
     }
 }

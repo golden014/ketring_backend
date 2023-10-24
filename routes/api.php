@@ -31,5 +31,7 @@ Route::get("users", function() {
 Route::group(['namespace' => 'Api\Auth'], function() {
     //login
     Route::post('login', [AuthController::class, 'login']);
+    //logout, middleware supaya hanya user dengan API token yg valid yg bisa akses
+    Route::get('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 });
 
