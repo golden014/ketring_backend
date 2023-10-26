@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -61,5 +63,30 @@ class AuthController extends Controller
             $token->delete();
         }
          return response(['message' => 'Logged out success'], 200);
+    }
+
+    //register
+    public function register(Request $request) {
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|unique:users',
+            'phone_number' => 'required',
+            'password' => 'required',
+            'conf_password' => 'required'
+        ]);
+
+        if ($request->password != $request->conf_password) {
+            return response(['error' => 'Password dont match'], 400);
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+            'password' => Hash::make($request->password),
+            'role' => 'Customer',
+        ]);
+
+        return response(['message' => 'Register user success'], 200);
     }
 }

@@ -33,5 +33,7 @@ Route::group(['namespace' => 'Api\Auth'], function() {
     Route::post('login', [AuthController::class, 'login']);
     //logout, middleware supaya hanya user dengan API token yg valid yg bisa akses
     Route::get('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+    //register
+    Route::post('register', [AuthController::class, 'register']);
 });
 
