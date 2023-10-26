@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\api\MenuController;
 use App\Http\Controllers\File\FileController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -29,6 +30,8 @@ Route::get("users", function() {
     return User::all();
 });
 
+
+//auth
 Route::group(['namespace' => 'Api\Auth'], function() {
     //login
     Route::post('login', [AuthController::class, 'login']);
@@ -41,3 +44,5 @@ Route::group(['namespace' => 'Api\Auth'], function() {
 
 Route::post('createStorageFolders', [FileController::class, 'initFolders']);
 
+//menu
+Route::post('insertMenu', [MenuController::class, 'insertMenu']);
