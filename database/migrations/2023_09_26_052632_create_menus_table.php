@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('menu_detail');
             $table->integer('menu_price');
             $table->string('menu_picture');
+            $table->integer('modal_price');
             
         });
     }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\File\FileController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,4 +37,7 @@ Route::group(['namespace' => 'Api\Auth'], function() {
     //register
     Route::post('register', [AuthController::class, 'register']);
 });
+
+
+Route::post('createStorageFolders', [FileController::class, 'initFolders']);
 
