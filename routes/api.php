@@ -18,9 +18,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::get('user', function(Request $request) {
     return $request->user();
-});
+})->middleware('auth:sanctum');
 
 Route::get('test', function() {
     return 'hello world';
@@ -28,6 +32,10 @@ Route::get('test', function() {
 
 Route::get("users", function() {
     return User::all();
+});
+
+Route::get('error_route', function() {
+    return response(['error' => 'unauthenticated'], 400);
 });
 
 
@@ -45,4 +53,4 @@ Route::group(['namespace' => 'Api\Auth'], function() {
 Route::post('createStorageFolders', [FileController::class, 'initFolders']);
 
 //menu
-Route::post('insertMenu', [MenuController::class, 'insertMenu']);
+Route::post('insertMenu', [MenuController::class, 'insertMenu'])->middleware('auth:sanctum');

@@ -11,6 +11,9 @@ class MenuController extends Controller
 {
     //insert menu
     public function insertMenu(Request $request) {
+        //pakai policy, supaya hanya admin yang bisa mengakses function ini
+        $this->authorize('admin-only');
+
         //validasiin request harus ada semua data yg diperlu
         $this->validate($request, [
             'menu_name' => 'required',
@@ -31,6 +34,7 @@ class MenuController extends Controller
         //directory file nya disimpan
         $menu_picture_location = 'menu_photos/' . $picture_name;
 
+        //buat menu nya
         Menu::create([
             'menu_name' => $request->menu_name,
             'menu_price' => $request->menu_price,

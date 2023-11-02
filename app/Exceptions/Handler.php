@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -45,4 +46,10 @@ class Handler extends ExceptionHandler
     //         'error' => $e->getMessage()
     //     ], $e->getCode() ?: 400);
     // }
+
+    //saat unauthenticated
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        return  response()->json(['error' => $exception->getMessage()], 401);
+    }
 }

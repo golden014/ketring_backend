@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use app\Models\User;
+use App\Policies\AdminPolicy;
 use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
@@ -16,6 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+
     ];
 
     /**
@@ -30,6 +32,7 @@ class AuthServiceProvider extends ServiceProvider
         Passport::refreshTokensExpireIn(now()->addDays(30));
         Passport::personalAccessTokensExpireIn(now()->addMonths(6));
 
+        Gate::define('admin-only', [AdminPolicy::class, 'adminOnly']);
         //
     }
 }
