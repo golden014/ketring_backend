@@ -52,5 +52,7 @@ Route::group(['namespace' => 'Api\Auth'], function() {
 
 Route::post('createStorageFolders', [FileController::class, 'initFolders']);
 
-//menu
-Route::post('insertMenu', [MenuController::class, 'insertMenu'])->middleware('auth:sanctum');
+//harus bawa bearer token, dan user nya harus admin, utk akses route2 ini
+Route::group(['middleware' => ['auth:sanctum', 'can:admin-only']], function () {
+    Route::post('insertMenu', [MenuController::class, 'insertMenu']);
+});

@@ -20,6 +20,7 @@ class AdminPolicy
         //
     }
 
+    //policy supaya hanya bisa diakses oleh admin
     public function adminOnly(User $user)
     {   
     return $user->role === 'Admin';

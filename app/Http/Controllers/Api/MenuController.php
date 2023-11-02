@@ -11,9 +11,7 @@ class MenuController extends Controller
 {
     //insert menu
     public function insertMenu(Request $request) {
-        //pakai policy, supaya hanya admin yang bisa mengakses function ini
-        $this->authorize('admin-only');
-
+        
         //validasiin request harus ada semua data yg diperlu
         $this->validate($request, [
             'menu_name' => 'required',
