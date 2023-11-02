@@ -10,6 +10,9 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        ''
+        'order_date',
+        'quantity',
+        'detail',
+        'status'
     ];
 }

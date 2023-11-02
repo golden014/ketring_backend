@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\api\MenuController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\File\FileController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -56,3 +57,6 @@ Route::post('createStorageFolders', [FileController::class, 'initFolders']);
 Route::group(['middleware' => ['auth:sanctum', 'can:admin-only']], function () {
     Route::post('insertMenu', [MenuController::class, 'insertMenu']);
 });
+
+//order
+Route::post('createOrder', [OrderController::class, 'createOrder'])->middleware('auth:sanctum');
