@@ -34,4 +34,17 @@ class OrderController extends Controller
 
         return response(['message' => 'Create order success']);
     }
+
+    public function updateOrderStatus(Request $request) {
+        $this->validate($request, [
+            'order_id',
+            'new_status'
+        ]);
+
+        $order = Order::where('id', $request->order_id)->first();
+        $order->status = $request->new_status;
+        $order->save();
+
+        return response(['message' => 'Update order status success']);
+    }
 }

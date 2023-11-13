@@ -56,6 +56,7 @@ Route::post('createStorageFolders', [FileController::class, 'initFolders']);
 //harus bawa bearer token, dan user nya harus admin, utk akses route2 ini
 Route::group(['middleware' => ['auth:sanctum', 'can:admin-only']], function () {
     Route::post('insertMenu', [MenuController::class, 'insertMenu']);
+    Route::post('updateOrderStatus', [OrderController::class, 'updateOrderStatus']);
 });
 
 //order
