@@ -13,6 +13,8 @@ class Order extends Model
         'order_date',
         'quantity',
         'detail',
-        'status'
+        'status',
+        'user_id',
+        'menu_id'
     ];
 }
