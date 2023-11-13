@@ -57,6 +57,7 @@ Route::post('createStorageFolders', [FileController::class, 'initFolders']);
 Route::group(['middleware' => ['auth:sanctum', 'can:admin-only']], function () {
     Route::post('insertMenu', [MenuController::class, 'insertMenu']);
     Route::post('updateOrderStatus', [OrderController::class, 'updateOrderStatus']);
+    Route::get('getOngoingOrders', [OrderController::class, 'getOngoingOrders']);
 });
 
 //order

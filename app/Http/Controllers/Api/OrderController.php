@@ -20,7 +20,7 @@ class OrderController extends Controller
         ]);
 
         $user_id = Auth::user()->id;
-        
+
         //error
         Order::create([
             'order_date' => $request->order_date,
@@ -42,7 +42,7 @@ class OrderController extends Controller
         ]);
 
         //isi status2 yg bisa diberikan
-        $all_status = array('Pending', 'Cancelled', 'On Progress', 'Done');
+        $all_status = array('Pending', 'Cancelled', 'On Going', 'Done');
 
         //kalau status yg di send gaada dalam array status, return error
         if (!in_array($request->new_status, $all_status)) {
@@ -57,5 +57,26 @@ class OrderController extends Controller
         $order->save();
 
         return response(['message' => 'Update order status success']);
+    }
+
+    //ambil ongoing order
+    public function getOngoingOrders() {
+        $ongoing_orders = Order::where('status', 'On Going')->get();
+        
+        //map utk jadiin response, buat ambil name user dan menu
+        $response = $ongoing_orders->map(function ($order) {
+            return [
+                'order_id' => $order->id,
+                'order_date' => $order->order_date,
+                'quantity' => $order->quantity,
+                'detail' => $order->detail,
+                'status' => $order->status,
+                'user_name' => $order->user->name,
+                'menu_name' => $order->menu->menu_name
+            ];
+        });
+
+        return response()->json($response, 200);
+        
     }
 }

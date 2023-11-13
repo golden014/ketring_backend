@@ -17,4 +17,12 @@ class Order extends Model
         'user_id',
         'menu_id'
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
+    public function menu() {
+        return $this->belongsTo(Menu::class);
+    }
 }

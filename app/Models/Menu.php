@@ -21,4 +21,8 @@ class Menu extends Model
         'menu_picture',
         'menu_detail'
     ];
+
+    public function order() {
+        return $this->hasMany(Order::class);
+    }
 }
