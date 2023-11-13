@@ -20,8 +20,7 @@ class OrderController extends Controller
         ]);
 
         $user_id = Auth::user()->id;
-        // dd($user_id);
-
+        
         //error
         Order::create([
             'order_date' => $request->order_date,
@@ -35,14 +34,26 @@ class OrderController extends Controller
         return response(['message' => 'Create order success']);
     }
 
+    //update order status
     public function updateOrderStatus(Request $request) {
         $this->validate($request, [
             'order_id',
             'new_status'
         ]);
 
+        //isi status2 yg bisa diberikan
+        $all_status = array('Pending', 'Cancelled', 'On Progress', 'Done');
+
+        //kalau status yg di send gaada dalam array status, return error
+        if (!in_array($request->new_status, $all_status)) {
+            return response(['error' => "Invalid status"]);
+        }
+
+        //check order dgn matched id
         $order = Order::where('id', $request->order_id)->first();
+        //update status
         $order->status = $request->new_status;
+        //save
         $order->save();
 
         return response(['message' => 'Update order status success']);
