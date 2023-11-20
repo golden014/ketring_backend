@@ -37,7 +37,14 @@ class CarouselController extends Controller
     }
 
     public function getAllCarousel() {
-        return response(Carousel::all(), 200);
+        //temp, for debugging
+        // $temp = Carousel::first();
+
+        // return response()->file($temp->image_path, ['Content-Type' => 'image/png']);
+
+        $temp = Carousel::first();
+
+        return response(asset($temp->image_path), 200);
     }
 }
 
