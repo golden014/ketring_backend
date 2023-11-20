@@ -25,6 +25,7 @@ return new class extends Migration
 
             $table->foreignId('user_id')->constrained();
             $table->foreignId('menu_id')->constrained();
+            $table->foreign('allocation_id')->constrained();
 
             // $table->foreign('user_id')->references('id')->on('users');
             // $table->foreign('menu_id')->references('id')->on('menus');

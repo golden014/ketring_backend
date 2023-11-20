@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AllocationController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\api\MenuController;
 use App\Http\Controllers\Api\OrderController;
@@ -47,6 +48,8 @@ Route::group(['namespace' => 'Api\Auth'], function() {
     //logout, middleware supaya hanya user dengan API token yg valid yg bisa akses
     Route::get('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     //register
+    Route::post('insertMenu', [MenuController::class, 'insertMenu']);
+
     Route::post('register', [AuthController::class, 'register']);
 });
 
@@ -55,9 +58,9 @@ Route::post('createStorageFolders', [FileController::class, 'initFolders']);
 
 //harus bawa bearer token, dan user nya harus admin, utk akses route2 ini
 Route::group(['middleware' => ['auth:sanctum', 'can:admin-only']], function () {
-    Route::post('insertMenu', [MenuController::class, 'insertMenu']);
     Route::post('updateOrderStatus', [OrderController::class, 'updateOrderStatus']);
     Route::get('getOngoingOrders', [OrderController::class, 'getOngoingOrders']);
+    Route::post('allocateMenu', [AllocationController::class, 'allocateMenu']);
 });
 
 //order

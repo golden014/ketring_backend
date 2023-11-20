@@ -4,20 +4,21 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
 {
     //insert menu
     public function insertMenu(Request $request) {
-        
         //validasiin request harus ada semua data yg diperlu
         $this->validate($request, [
             'menu_name' => 'required',
             'menu_price' => 'required',
             'modal_price' => 'required',
-            'menu_picture' => 'required',
+            'menu_picture' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'menu_detail' => 'required'
         ]);
 
@@ -43,4 +44,6 @@ class MenuController extends Controller
 
         return response(['message' => 'Create menu success !'], 200);
     }
+
+
 }

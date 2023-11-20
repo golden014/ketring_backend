@@ -25,4 +25,8 @@ class Menu extends Model
     public function order() {
         return $this->hasMany(Order::class);
     }
+
+    public function allocation() {
+        return $this->hasMany(Allocation::class);
+    }
 }

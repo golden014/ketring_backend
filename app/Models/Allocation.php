@@ -5,23 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Allocation extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
-        'order_date',
-        'quantity',
-        'detail',
-        'status',
-        'user_id',
+        'allocation_date',
+        'end_order_date',
+        'end_order_time',
         'menu_id',
-        'allocation_id'
     ];
-
-    public function user() {
-        return $this->belongsTo(User::class);
-    }
 
     public function menu() {
         return $this->belongsTo(Menu::class);
