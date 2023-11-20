@@ -29,7 +29,7 @@ class AllocationController extends Controller
 
         
 
-        return response(['message' => 'Allocate menu success ! - '.$temp->menu->menu_name]);
+        return response(['message' => 'Allocate menu success ! - '.$temp->menu->menu_name], 200);
     }
 
 }

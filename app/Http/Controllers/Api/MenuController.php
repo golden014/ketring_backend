@@ -45,5 +45,46 @@ class MenuController extends Controller
         return response(['message' => 'Create menu success !'], 200);
     }
 
+    public function getMenuWithPagination(Request $request) {
+        //pastiin setiap hit search keyword baru, current_page nya direset ke page pertama
+        
+        //page = lagi di page berapa, data_per_page = mau tampilin berapa data dalam satu page
+        $this->validate($request, [
+            'current_page' => 'required',
+            'data_per_page' => 'required',
+        ]);
+
+        //set offset nya
+        $offset = ($request->current_page - 1) * $request->data_per_page;
+
+        //kalau ada dikasih keyword
+        if ($request->keyword) {
+            //filter berdasarkan keyword, lalu balikin data nya dengan pagination
+            $data = Menu::where('menu_name', 'like', '%'.$request->keyword.'%')->skip($offset)->take($request->data_per_page)->get();
+        } 
+        
+        //kalau gaada dikasih keyword, lgsung ambil aja tanpa filter
+        else {
+            $data = Menu::skip($offset)->take($request->data_per_page)->get();
+        }
+
+        //return data
+        return response($data, 200);
+    }
+
+    public function getMenuCount(Request $request) {
+        //ambil count dari menu supaya tahu berapa button dibawah nya (utk paginate nya)
+        //jumlah total page = menu_count / data_per_page, round up
+
+        if ($request->keyword) {
+            $count = Menu::where('menu_name', 'like', '%'.$request->keyword.'%')->count();
+        }
+
+        else {
+            $count = Menu::all()->count();
+        }
+
+        return response(['count' => $count], 200);
+    }
 
 }

@@ -48,7 +48,7 @@ Route::group(['namespace' => 'Api\Auth'], function() {
     //logout, middleware supaya hanya user dengan API token yg valid yg bisa akses
     Route::get('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     //register
-    Route::post('insertMenu', [MenuController::class, 'insertMenu']);
+    
 
     Route::post('register', [AuthController::class, 'register']);
 });
@@ -61,7 +61,13 @@ Route::group(['middleware' => ['auth:sanctum', 'can:admin-only']], function () {
     Route::post('updateOrderStatus', [OrderController::class, 'updateOrderStatus']);
     Route::get('getOngoingOrders', [OrderController::class, 'getOngoingOrders']);
     Route::post('allocateMenu', [AllocationController::class, 'allocateMenu']);
+    Route::post('insertMenu', [MenuController::class, 'insertMenu']);
+
 });
 
 //order
 Route::post('createOrder', [OrderController::class, 'createOrder'])->middleware('auth:sanctum');
+
+//get all menu
+Route::post('getMenuWithPagination', [MenuController::class, 'getMenuWithPagination']);
+Route::post('getMenuCount', [MenuController::class, 'getMenuCount']);
