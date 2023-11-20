@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AllocationController;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\api\CarouselController;
 use App\Http\Controllers\api\MenuController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\File\FileController;
@@ -58,11 +59,15 @@ Route::post('createStorageFolders', [FileController::class, 'initFolders']);
 
 //harus bawa bearer token, dan user nya harus admin, utk akses route2 ini
 Route::group(['middleware' => ['auth:sanctum', 'can:admin-only']], function () {
+    //order
     Route::post('updateOrderStatus', [OrderController::class, 'updateOrderStatus']);
     Route::get('getOngoingOrders', [OrderController::class, 'getOngoingOrders']);
+    //menu
     Route::post('allocateMenu', [AllocationController::class, 'allocateMenu']);
     Route::post('insertMenu', [MenuController::class, 'insertMenu']);
-
+    //carousel
+    Route::post('addNewCarousel', [CarouselController::class, 'addNewCarousel']);
+    Route::get('getAllCarousel', [CarouselController::class, 'getAllCarousel']);
 });
 
 //order
@@ -71,3 +76,4 @@ Route::post('createOrder', [OrderController::class, 'createOrder'])->middleware(
 //get all menu
 Route::post('getMenuWithPagination', [MenuController::class, 'getMenuWithPagination']);
 Route::post('getMenuCount', [MenuController::class, 'getMenuCount']);
+
