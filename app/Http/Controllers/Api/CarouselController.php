@@ -22,10 +22,10 @@ class CarouselController extends Controller
         $carousel_file_name =$request->carousel_name.'.'.$carousel_image->extension();
 
         //save file ke storage di directory carousel_photos
-        Storage::putFileAs('carousel_photos', $carousel_image, $carousel_file_name);
+        Storage::putFileAs('images/carousel_photos', $carousel_image, $carousel_file_name);
         
         //directory file nya yang akan disimpan di db
-        $image_path = 'carousel_photos/'.$carousel_file_name;
+        $image_path = 'images/carousel_photos/'.$carousel_file_name;
 
         //buat carousel nya
         Carousel::create([
@@ -42,9 +42,17 @@ class CarouselController extends Controller
 
         // return response()->file($temp->image_path, ['Content-Type' => 'image/png']);
 
-        $temp = Carousel::first();
+        $carousels = Carousel::all();
 
-        return response(asset($temp->image_path), 200);
+        $response = $carousels->map(function ($carousel) {
+            return [
+                'carousel_name' => $carousel->name,
+                'iamge_path' => asset($carousel->image_path)
+            ];
+
+        });
+
+        return response()->json($response, 200);
     }
 }
 

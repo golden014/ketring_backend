@@ -31,7 +31,7 @@ class MenuController extends Controller
         Storage::putFileAs('menu_photos', $menu_picture, $picture_name);
         
         //directory file nya disimpan
-        $menu_picture_location = 'menu_photos/' . $picture_name;
+        $menu_picture_location = 'images/menu_photos/' . $picture_name;
 
         //buat menu nya
         Menu::create([
