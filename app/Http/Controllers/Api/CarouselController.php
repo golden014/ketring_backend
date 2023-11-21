@@ -37,11 +37,6 @@ class CarouselController extends Controller
     }
 
     public function getAllCarousel() {
-        //temp, for debugging
-        // $temp = Carousel::first();
-
-        // return response()->file($temp->image_path, ['Content-Type' => 'image/png']);
-
         $carousels = Carousel::all();
 
         $response = $carousels->map(function ($carousel) {
@@ -61,17 +56,26 @@ class CarouselController extends Controller
             'carousel_id' => 'required'
         ]);
 
-        $status = Carousel::where('id', $request->carousel_id)->delete();
+        $carousel = Carousel::where('id', $request->carousel_id)->first();
 
-        if (!$status) {
+        if (!$carousel) {
             return response(['error' => 'error when deleting carousel!'], 500);
         }
+ 
+        Storage::delete($carousel->image_path);
+
+        $carousel->delete();
 
         return response(['message' => 'Delete carousel success !'], 200);
     }
 
     public function deleteAllCarousel() {
+        $carousels = Carousel::all();
         
+        foreach($carousels as $carousel) {
+            Storage::delete($carousel->image_path);
+        }
+
         Carousel::truncate();
 
         return response(['message' => 'Delete all carousels success !'], 200);
