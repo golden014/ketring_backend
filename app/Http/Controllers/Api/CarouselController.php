@@ -46,6 +46,7 @@ class CarouselController extends Controller
 
         $response = $carousels->map(function ($carousel) {
             return [
+                'carousel_id' => $carousel->id,
                 'carousel_name' => $carousel->name,
                 'iamge_path' => asset($carousel->image_path)
             ];
@@ -53,6 +54,27 @@ class CarouselController extends Controller
         });
 
         return response()->json($response, 200);
+    }
+
+    public function deleteCarousel(Request $request) {
+        $this->validate($request, [
+            'carousel_id' => 'required'
+        ]);
+
+        $status = Carousel::where('id', $request->carousel_id)->delete();
+
+        if (!$status) {
+            return response(['error' => 'error when deleting carousel!'], 500);
+        }
+
+        return response(['message' => 'Delete carousel success !'], 200);
+    }
+
+    public function deleteAllCarousel() {
+        
+        Carousel::truncate();
+
+        return response(['message' => 'Delete all carousels success !'], 200);
     }
 }
 

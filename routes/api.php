@@ -68,6 +68,8 @@ Route::group(['middleware' => ['auth:sanctum', 'can:admin-only']], function () {
     //carousel
     Route::post('addNewCarousel', [CarouselController::class, 'addNewCarousel']);
     Route::get('getAllCarousel', [CarouselController::class, 'getAllCarousel']);
+    Route::post('deleteCarousel', [CarouselController::class, 'deleteCarousel']);
+    Route::get('deleteAllCarousel', [CarouselController::class, 'deleteAllCarousel']);
 });
 
 //order
