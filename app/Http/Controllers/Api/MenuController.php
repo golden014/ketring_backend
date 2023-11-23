@@ -87,4 +87,8 @@ class MenuController extends Controller
         return response(['count' => $count], 200);
     }
 
+    public function deleteMenuById(Request $request) {
+        
+    }
+
 }

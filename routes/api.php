@@ -41,7 +41,6 @@ Route::get('error_route', function() {
     return response(['error' => 'unauthenticated'], 400);
 });
 
-
 //auth
 Route::group(['namespace' => 'Api\Auth'], function() {
     //login
@@ -49,8 +48,6 @@ Route::group(['namespace' => 'Api\Auth'], function() {
     //logout, middleware supaya hanya user dengan API token yg valid yg bisa akses
     Route::get('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     //register
-    
-
     Route::post('register', [AuthController::class, 'register']);
 });
 
@@ -78,4 +75,5 @@ Route::post('createOrder', [OrderController::class, 'createOrder'])->middleware(
 //get all menu
 Route::post('getMenuWithPagination', [MenuController::class, 'getMenuWithPagination']);
 Route::post('getMenuCount', [MenuController::class, 'getMenuCount']);
+Route::get('getUpcomingMenu', [AllocationController::class, 'getUpcomingMenu']);
 

@@ -32,4 +32,34 @@ class AllocationController extends Controller
         return response(['message' => 'Allocate menu success ! - '.$temp->menu->menu_name], 200);
     }
 
+    //upcoming menu
+    public function getUpcomingMenu() {
+        
+        $curr = now();
+        $currDate = $curr->toDateString();
+        $currTime = $curr->toTimeString();
+
+        //ambil yang end order date nya > dari date sekarang atau yang end order date nya adalah date sekarang tapi end order time nya <= end order time
+        $upcomingAllocations = Allocation::where('end_order_date', '>', $currDate)->orWhere(function($query) use ($currDate, $currTime) {
+            $query->where('end_order_date', '=', $currDate)->where('end_order_time', '<=', $currTime);
+        })->get();
+
+        $response = $upcomingAllocations->map(function ($allocation) {
+            return [
+                'allocation_id' => $allocation->id,
+                'allocation_date' => $allocation->allocation_date,
+                'end_order_date' => $allocation->end_order_date,
+                'end_order_time' => $allocation->end_order_time,
+                'menu_id' => $allocation->menu_id,
+                'menu_name' => $allocation->menu->menu_name,
+                'menu_price' => $allocation->menu->menu_price,
+                'menu_detail' => $allocation->menu->menu_detail,
+                'menu_picture' => asset($allocation->menu->menu_picture)
+            ];
+        });
+
+        return response($response, 200);
+
+    }
+
 }

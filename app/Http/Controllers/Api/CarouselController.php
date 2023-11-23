@@ -39,11 +39,12 @@ class CarouselController extends Controller
     public function getAllCarousel() {
         $carousels = Carousel::all();
 
+        //utk ngembaliin path nya dalam bentuk link, pakai asset()
         $response = $carousels->map(function ($carousel) {
             return [
                 'carousel_id' => $carousel->id,
                 'carousel_name' => $carousel->name,
-                'iamge_path' => asset($carousel->image_path)
+                'image_path' => asset($carousel->image_path)
             ];
 
         });
@@ -56,26 +57,33 @@ class CarouselController extends Controller
             'carousel_id' => 'required'
         ]);
 
+        //cek apakah carousel dengan id tsb ada atau engga
         $carousel = Carousel::where('id', $request->carousel_id)->first();
 
+        //kalau gaada, return error
         if (!$carousel) {
             return response(['error' => 'error when deleting carousel!'], 500);
         }
  
+        //delete dari storage nya 
         Storage::delete($carousel->image_path);
 
+        //delete dari db
         $carousel->delete();
 
         return response(['message' => 'Delete carousel success !'], 200);
     }
 
     public function deleteAllCarousel() {
+        //ambil semua carousel nya dulu
         $carousels = Carousel::all();
         
+        //delete dari storage utk semua foto carousel nya
         foreach($carousels as $carousel) {
             Storage::delete($carousel->image_path);
         }
 
+        //delete all di db dan reset id nya dari awal lagi
         Carousel::truncate();
 
         return response(['message' => 'Delete all carousels success !'], 200);
