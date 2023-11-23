@@ -16,7 +16,8 @@ class Order extends Model
         'status',
         'user_id',
         'menu_id',
-        'allocation_id'
+        'allocation_id',
+        'payment_proof'
     ];
 
     public function user() {

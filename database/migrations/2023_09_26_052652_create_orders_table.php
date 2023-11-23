@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->string('detail');
             $table->string('status');
+            $table->string('payment_proof');
             // $table->bigInteger('user_id');
             // $table->bigInteger('menu_id');
 

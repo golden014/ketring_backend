@@ -6,23 +6,38 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
     //create Order
     public function createOrder(Request $request) {
         $this->validate($request, [
-            'order_date',
-            'quantity',
-            'detail',
-            'status',
-            'menu_id',
-            'allocation_id'
+            'order_date' => 'required',
+            'quantity' => 'required',
+            'detail' => 'required',
+            'status' => 'required',
+            'menu_id' => 'required',
+            'allocation_id' => 'required',
+            'payment_proof' => 'required|image|mimes:jpg,png,jpeg,gif,svg'
         ]);
 
+        //get current user
         $user_id = Auth::user()->id;
 
-        //error
+        //ambil file dari request
+        $payment_proof_picture = $request->file('payment_proof');
+
+        //format nama file: [date]_[user_id]_[allocation_id]_proof.ext
+        $file_name = $request->order_date.'_'.$user_id.'_'.$request->allocation_id.'_proof.'.$payment_proof_picture->extension();
+
+        //save file ke directory payment_proof
+        Storage::putFileAs('payment_proof', $payment_proof_picture, $file_name);
+
+        //directory file nya disimpan
+        $payment_proof_path = 'images/payment_proof/'.$file_name;
+
+
         Order::create([
             'order_date' => $request->order_date,
             'quantity' => $request->quantity,
@@ -30,7 +45,8 @@ class OrderController extends Controller
             'status' => $request->status,
             'menu_id' => $request->menu_id,
             'user_id' => $user_id,
-            'allocation_id' => $request->allocation_id
+            'allocation_id' => $request->allocation_id,
+            'payment_proof' => $payment_proof_path
         ]);
 
         return response(['message' => 'Create order success']);
