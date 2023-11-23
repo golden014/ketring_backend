@@ -16,7 +16,8 @@ class OrderController extends Controller
             'quantity',
             'detail',
             'status',
-            'menu_id'
+            'menu_id',
+            'allocation_id'
         ]);
 
         $user_id = Auth::user()->id;
@@ -29,6 +30,7 @@ class OrderController extends Controller
             'status' => $request->status,
             'menu_id' => $request->menu_id,
             'user_id' => $user_id,
+            'allocation_id' => $request->allocation_id
         ]);
 
         return response(['message' => 'Create order success']);

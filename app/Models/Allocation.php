@@ -24,4 +24,8 @@ class Allocation extends Model
     public function menu() {
         return $this->belongsTo(Menu::class);
     }
+
+    public function order() {
+        return $this->hasMany(Order::class);
+    }
 }

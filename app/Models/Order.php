@@ -26,4 +26,8 @@ class Order extends Model
     public function menu() {
         return $this->belongsTo(Menu::class);
     }
+
+    public function allocation() {
+        return $this->belongsTo(Allocation::class);
+    }
 }
