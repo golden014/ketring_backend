@@ -76,4 +76,4 @@ Route::post('createOrder', [OrderController::class, 'createOrder'])->middleware(
 Route::post('getMenuWithPagination', [MenuController::class, 'getMenuWithPagination']);
 Route::post('getMenuCount', [MenuController::class, 'getMenuCount']);
 Route::get('getUpcomingMenu', [AllocationController::class, 'getUpcomingMenu']);
-
+Route::get('getAllMenuNames', [MenuController::class, 'getAllMenuNames']);

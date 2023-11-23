@@ -95,7 +95,17 @@ class MenuController extends Controller
     }
 
     public function deleteMenuById(Request $request) {
-        
+        //todo
+    }
+
+    public function getAllMenuNames() {
+        //get all menu
+        $all_menus = Menu::all();
+
+        //get all the names
+        $menu_names = $all_menus->pluck('menu_name');
+
+        return response($menu_names, 200);
     }
 
 }
