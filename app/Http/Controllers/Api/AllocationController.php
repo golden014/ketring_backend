@@ -44,6 +44,7 @@ class AllocationController extends Controller
             $query->where('end_order_date', '=', $currDate)->where('end_order_time', '<=', $currTime);
         })->get();
 
+        //return barengan dengan detail dari menu nya
         $response = $upcomingAllocations->map(function ($allocation) {
             return [
                 'allocation_id' => $allocation->id,

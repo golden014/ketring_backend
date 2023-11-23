@@ -68,6 +68,13 @@ class MenuController extends Controller
             $data = Menu::skip($offset)->take($request->data_per_page)->get();
         }
 
+        //return menu picture nya sebagai link
+        if($data) {
+            foreach($data as $menu) {
+                $menu['menu_picture'] = asset($menu['menu_picture']);
+            }
+        }
+
         //return data
         return response($data, 200);
     }
