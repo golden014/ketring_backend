@@ -103,9 +103,9 @@ class MenuController extends Controller
         $all_menus = Menu::all();
 
         //get all the names
-        $menu_names = $all_menus->pluck('menu_name');
+        // $menu_names = $all_menus->pluck('menu_name');
 
-        return response($menu_names, 200);
+        return response($all_menus, 200);
     }
 
 }
