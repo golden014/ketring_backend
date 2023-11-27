@@ -13,7 +13,7 @@ class AllocationController extends Controller
         
         //validate
         $this->validate($request, [
-            'allocation_date' => 'required|unique:allocations',
+            'allocation_date' => 'required|unique:sallocations',
             'end_order_date' => 'required',
             'end_order_time' => 'required',
             'menu_id' => 'required'
