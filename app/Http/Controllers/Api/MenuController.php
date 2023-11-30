@@ -23,15 +23,17 @@ class MenuController extends Controller
         ]);
 
         //ambil picture dari menu nya
-        $menu_picture = $request->file('menu_picture');
+        $menu_picture = $request->file('menu_picture')->store('test');
         //nama dari picture = nama menu.extensionnya (cth nama menu: nasi goreng, ext file yg dikasi .png -> namanya jadi nasi goreng.png)
-        $picture_name = $request->menu_name.'.'.$menu_picture->extension();
+        // $picture_name = $request->menu_name.'.'.$menu_picture->extension();
         
-        //save file nya ke storage kita di directory menu_photos
-        Storage::putFileAs('menu_photos', $menu_picture, $picture_name);
+        // //save file nya ke storage kita di directory menu_photos
+        // Storage::putFileAs('menu_photos', $menu_picture, $picture_name);
         
         //directory file nya disimpan
-        $menu_picture_location = 'images/menu_photos/' . $picture_name;
+        $menu_picture_location = '/storage/' . $menu_picture;
+
+        // $menu_picture_location = 'images/menu_photos/' . $picture_name;
 
         //buat menu nya
         Menu::create([
