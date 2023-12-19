@@ -56,12 +56,12 @@ class OrderController extends Controller
     //update order status
     public function updateOrderStatus(Request $request) {
         $this->validate($request, [
-            'order_id',
-            'new_status'
+            'order_id' => 'required',
+            'new_status' => 'required'
         ]);
 
         //isi status2 yg bisa diberikan
-        $all_status = array('Pending', 'Cancelled', 'On Going', 'Done');
+        $all_status = array('Pending', 'Rejected', 'On Going', 'Approved');
 
         //kalau status yg di send gaada dalam array status, return error
         if (!in_array($request->new_status, $all_status)) {
@@ -80,7 +80,8 @@ class OrderController extends Controller
 
     //ambil ongoing order
     public function getOngoingOrders() {
-        $ongoing_orders = Order::where('status', 'On Going')->get();
+        // $ongoing_orders = Order::where('status', 'On Going')->get();
+        $ongoing_orders = Order::all();
         
         //map utk jadiin response, buat ambil name user dan menu
         $response = $ongoing_orders->map(function ($order) {
@@ -91,7 +92,8 @@ class OrderController extends Controller
                 'detail' => $order->detail,
                 'status' => $order->status,
                 'user_name' => $order->user->name,
-                'menu_name' => $order->menu->menu_name
+                'menu_name' => $order->menu->menu_name,
+                'payment_proof' => asset($order->payment_proof)
             ];
         });
 
