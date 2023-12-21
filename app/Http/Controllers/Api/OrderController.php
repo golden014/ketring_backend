@@ -36,7 +36,7 @@ class OrderController extends Controller
         Storage::putFileAs('payment_proof', $payment_proof_picture, $file_name);
 
         //directory file nya disimpan
-        $payment_proof_path = 'images/payment_proof/'.$file_name;
+        $payment_proof_path = 'storage/payment_proof/'.$file_name;
 
 
         Order::create([
